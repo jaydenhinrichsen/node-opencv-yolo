@@ -8,9 +8,11 @@ Here's a demo of the project in action.
 ![](demo.gif)
 
 ## Why
-My goal for this project was to create a simple proof-of-concept and to explore object detection using OpenCV.
+My goal for this project was to create a simple proof-of-concept and to explore object detection/image processing using OpenCV.
 
-In the future, I hope to use what I've learned here to process live video streams from IP cameras.
+In the future, I hope to use what I've learned here to process live video streams from IP cameras. This would allow for a high amount of control over motion events(e.g. only being notified when a person is detected in a frame).
+
+I've faced some challenges with the performance of OpenCV when processing video; likely due to code structure and the fact that it's being run on a CPU, however, I believe I can achieve acceptable performance by utilizing multi-threading.
 
 ## Installation & Usage
 
