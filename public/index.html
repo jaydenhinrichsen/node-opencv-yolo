@@ -1,0 +1,135 @@
+<html>
+  <head>
+    <style>
+      body,
+      html {
+        margin: 0;
+
+        width: 100vw;
+        overflow: hidden;
+      }
+
+      button,
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      p,
+      div,
+      span,
+      a,
+      html,
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+          "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+          "Helvetica Neue", sans-serif;
+        -webkit-font-smoothing: antialiased !important;
+        -moz-osx-font-smoothing: grayscale;
+      }
+      #images {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        width: 100vw;
+        padding-top: 1rem;
+      }
+
+      #left {
+        width: 50%;
+      }
+      #right {
+        width: 50%;
+      }
+
+      #original-image {
+        float: right;
+      }
+
+      #detected-image {
+        float: left;
+      }
+
+      #controls {
+        padding: 1rem;
+        background-color: #b1b1b1;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        width: 100vw;
+      }
+
+      button {
+        border: none !important;
+        padding: 0.5rem 0.75rem;
+        font-weight: 500;
+        border-radius: 6px;
+        cursor: pointer;
+      }
+
+      button:hover {
+        text-decoration: underline;
+      }
+
+      #detect {
+        margin-right: 0.5rem;
+      }
+      #next {
+        margin-left: 0.5rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="controls">
+      <button id="detect">Detect Objects</button>
+      <button id="next">Next Image</button>
+    </div>
+    <div id="images">
+      <div id="left">
+        <img id="original-image" />
+      </div>
+      <div id="right">
+        <img id="detected-image" />
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", e => {
+        let original = document.getElementById("original-image");
+        let detected = document.getElementById("detected-image");
+        let images = [];
+        let index = 0;
+        fetch(`http://localhost:5000/images`)
+          .then(response => {
+            return response.json();
+          })
+          .then(data => {
+            images = data;
+            original.setAttribute(
+              "src",
+              "http://localhost:5000/images/" + images[0]
+            );
+          });
+
+        let detectButton = document.getElementById("detect");
+        detectButton.addEventListener("click", e => {
+          detected.setAttribute(
+            "src",
+            "http://localhost:5000/detect/" + images[index]
+          );
+        });
+
+        let nextButton = document.getElementById("next");
+        nextButton.addEventListener("click", e => {
+          index += 1;
+          original.setAttribute(
+            "src",
+            "http://localhost:5000/images/" + images[index]
+          );
+          detected.setAttribute("src", "");
+        });
+      });
+    </script>
+  </body>
+</html>
